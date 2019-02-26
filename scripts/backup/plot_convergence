@@ -1,0 +1,23 @@
+#!/bin/bash 
+#script che prende un output di g_mmpbsa, divide il grafico in sottorange n1..n2 punti con spaziatura space e fa un mmpbsa del sottorange, poi plotta tutti i risultati di questi sottorange.
+
+n1=$1		#tempo inferiore del range di punti (ps)
+n2=$2		#tempo superiore del range di punti, (ps) se si parte da 0 usare n2-1.
+space=$3	#spaziatura in tempo (ps) da usare nel range di punti
+dt=$4		#dt (ps)  da usare nel getframes, ovvero nell'mmpbsa
+rm time.dat plot.dat
+mkdir plot
+for i in $(seq $n1 $space $n2) 
+do
+a=$(($i+$space)) 
+echo $i " - " $a
+echo $i >>time.dat
+getframes_mmpbsa $i $a $dt
+done
+
+mv summary* full* time.dat plot
+for i in $(ls plot | grep summary | sort -V) 
+do
+awk 'NR==21 {print $4 "  " $6}' plot/"$i" >> plot/values.dat
+done
+paste plot/time.dat plot/values.dat >> plot.dat

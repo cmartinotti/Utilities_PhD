@@ -1,0 +1,3 @@
+#!/bin/bash
+echo "elimino tutti i file che contengono #"
+rm *#*

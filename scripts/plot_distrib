@@ -1,0 +1,7 @@
+#!/bin/bash
+
+infile=$1
+binwidth=$2
+
+cat $infile | grep -v ["@","#"] | awk '{print $2}' > temp.xvg
+g_analyze -f temp.xvg -bw $binwidth -dist

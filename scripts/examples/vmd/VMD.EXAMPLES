@@ -1,0 +1,1 @@
+to print with transparent background you switch to povray renderer, then you add the flags +FT +UA +FN and then you change the .tga into .png, then you render and it should print the image

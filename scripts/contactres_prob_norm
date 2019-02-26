@@ -1,0 +1,29 @@
+#!/bin/bash
+#script che prende un file proveniente da g_mindist, un valore treshold e il numero di residui da prendere in considerazione e calcola la probabilita' per ogni residuo, normalizzata a 1 di contatto.
+
+infile=$1
+val=$2
+nres=$3
+
+rm contact_prob.xvg *.out
+
+grep -v "#" $1 | grep -v "@" > temp.out
+lines=$(cat temp.out  | wc -l)
+lines=$(($lines-1))
+cat temp.out | tail -n $lines >clean.out
+
+
+for i in $(seq 1 $nres)
+do 
+	col=$(($i+1))
+	
+	awk -v col=$col -v val=$val -v lines=$lines '{if ($col<=val) count=count+1} END {print col-1 "  " count}' clean.out >> temp2.out
+
+
+done
+
+tot=$(awk  '{sum+=$2} END {print sum}' temp2.out)
+awk -v tot=$tot '{if ($2>0) $2=$2/tot ;else $2=0} {print $0}' temp2.out > "$infile"_norm.xvg 
+
+
+rm  *.out

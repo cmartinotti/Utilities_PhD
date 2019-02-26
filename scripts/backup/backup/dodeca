@@ -1,0 +1,4 @@
+#!/bin/bash
+file=$1
+
+trjconv -f $1 -pbc mol -ur compact -o $1_dodeca

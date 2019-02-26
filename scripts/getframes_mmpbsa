@@ -1,0 +1,21 @@
+#!/bin/bash
+
+begin=$1	#istante tiniz (ps)
+end=$2		#istante tfin (ps)
+dt=$3		#dt (ps)
+
+rm *.out
+
+cat polar.xvg | grep -v "@" | grep -v "#" >clean_polar.out
+cat apolar.xvg | grep -v "@" | grep -v "#" >clean_apolar.out
+cat energy_MM.xvg | grep -v "@" | grep -v "#" >clean_mm.out
+
+begline=$(cat clean_polar.out | grep -w "$begin" -n | cut -d ":" -f 1)
+endline=$(cat clean_polar.out | grep -w "$end" -n | cut -d ":" -f 1)
+
+awk -v beg=$begline -v end=$endline -v dt=$dt ' NR>=beg && NR<=end { if ($1%dt==0) print $0 }' clean_polar.out > polar_dt.out 
+awk -v beg=$begline -v end=$endline -v dt=$dt ' NR>=beg && NR<=end { if ($1%dt==0) print $0 }' clean_apolar.out > apolar_dt.out 
+awk -v beg=$begline -v end=$endline -v dt=$dt ' NR>=beg && NR<=end { if ($1%dt==0) print $0 }' clean_mm.out > mm_dt.out 
+
+MmPbSaStat.py -m mm_dt.out -p polar_dt.out -a apolar_dt.out -bs -nbs 2000 -of full_energy_$begin-$end.dat -os summary_energy_$begin-$end.dat
+rm *.out

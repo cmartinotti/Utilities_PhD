@@ -1,0 +1,21 @@
+#!/bin/bash
+#script che prende un infile da g_mindist e trova la probabilita di ogni residuo di una protein di toccare un altro grouppo. 
+infile=$1 #-> file con la lista delle distanze vs tempo
+val=$2 #-> valore di cutoff per considerare un interazione rilevante
+nres=$3 #-> numero di residue della proteina
+
+rm contact_prob.xvg
+grep -v "#" $1 | grep -v "@" > temp.out
+lines=$(cat temp.out  | wc -l)
+lines=$(($lines-1))
+cat temp.out | tail -n $lines >clean.out
+
+
+for i in $(seq 1 $nres)
+do 
+	col=$(($i+1))
+	
+	awk -v col=$col -v val=$val -v lines=$lines '{if ($col<val) count=count+1} END {print col-1 "  " count/lines}' clean.out >>contact_prob.xvg
+
+done
+rm *.out
