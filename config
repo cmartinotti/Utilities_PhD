@@ -1,0 +1,19 @@
+#PLACE WHERE THE ALIAS OF THE SSH CONNECTIONS ARE SAVED
+
+Host magnus
+user cmartinotti
+HostName magnus.pawsey.org.au
+ServerAliveInterval 300
+ForwardX11 yes 
+
+Host zeus
+user cmartinotti
+HostName zeus.pawsey.org.au
+ServerAliveInterval 300
+ForwardX11 yes 
+
+Host magnusdata
+user cmartinotti
+HostName hpc-data.pawsey.org.au
+ServerAliveInterval 300
+ForwardX11 yes 

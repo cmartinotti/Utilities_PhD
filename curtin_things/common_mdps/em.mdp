@@ -1,0 +1,34 @@
+define                  = -DFLEXIBLE    ; defines to pass to the preprocessor
+
+; 7.3.3 Run Control
+integrator              = steep         ; energy minimisation  
+nsteps                  = 500000000     
+
+;Energy minimizing stuff
+emstep               =  0.001
+emtol                =  250.0	
+
+
+
+; 7.3.9 Neighbor Searching
+nstlist                 = 5             ; [steps] freq to update neighbor list
+ns_type                 = grid          ; method of updating neighbor list
+pbc                     = xyz           ; periodic boundary conditions in all directions
+rlist                   = 0.8           ; [nm] cut-off distance for the short-range neighbor list
+
+; 7.3.10 Electrostatics
+coulombtype             = Reaction_field; Reaction field  
+rcoulomb                = 1.4           ; [nm] distance for Coulomb cut-off
+rcoulomb-switch         = 0
+epsilon_r               = 1
+epsilon_rf              = 78.0
+
+ 
+; 7.3.11 VdW
+vdwtype                 = cut-off       ; twin-range cut-off with rlist where rvdw >= rlist
+rvdw                    = 1.4           ; [nm] distance for LJ cut-off
+rvdw-switch             = 0
+DispCorr                = No          ; apply long range dispersion corrections for energy
+ 
+
+

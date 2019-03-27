@@ -1,0 +1,10 @@
+define                  = -DFLEXIBLE    ; defines to pass to the preprocessor
+
+; 7.3.3 Run Control
+integrator              = steep         ; energy minimisation
+nsteps                  = 500000000
+
+;Energy minimizing stuff
+emstep               =  0.001
+emtol                =  250.0
+

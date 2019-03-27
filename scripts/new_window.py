@@ -11,7 +11,7 @@ df=xvgstuff.xvgtotable(sys.argv[1])
 neigh=df[np.sqrt((float(sys.argv[2])-df.iloc[:,4])**2)<0.1].iloc[0,[0,4]].values
 #neigh=df[np.sqrt((float(sys.argv[2])-df.iloc[:,4])**2)<0.01].iloc[0,[0,4]].values
 if (neigh.any()):
-    print(neigh[0].astype(int))
+    print(neigh[0].astype(float))
 
 
 
